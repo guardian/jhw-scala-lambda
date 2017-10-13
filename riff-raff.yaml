@@ -23,7 +23,7 @@ deployments:
       cloudFormationStackName: jhw-scala-lambda
       templatePath: cfn.yaml
     dependencies: [jhw-scala-lambda]
-  jr-microservice-lambda-update:
+  jhw-scala-lambda-update:
     template: jhw-scala-lambda
     actions: [updateLambda]
     dependencies: [jhw-scala-lambda-cfn]
