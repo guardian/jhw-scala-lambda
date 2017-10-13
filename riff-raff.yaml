@@ -1,0 +1,29 @@
+stacks: [playground]
+regions: [eu-west-1]
+templates:
+  jhw-scala-lambda:
+    type: aws-lambda
+    app: jhw-scala-lambda
+    contentDirectory: jhw-scala-lambda
+    parameters:
+      bucket: gu-jr-microservice-workshop-dist
+      functionNames: [jhw-scala-lambda-]
+      fileName: jhw-scala-lambda.zip
+      prefixStack: false
+
+deployments:
+  jhw-scala-lambda-upload:
+    template: jhw-scala-lambda
+    actions: [uploadLambda]
+  jhw-scala-lambda-cfn:
+    type: cloud-formation
+    app: jhw-scala-lambda
+    parameters:
+      prependStackToCloudFormationStackName: false
+      cloudFormationStackName: jhw-scala-lambda
+      templatePath: cfn.yaml
+    dependencies: [jhw-scala-lambda]
+  jr-microservice-lambda-update:
+    template: jhw-scala-lambda
+    actions: [updateLambda]
+    dependencies: [jhw-scala-lambda-cfn]
