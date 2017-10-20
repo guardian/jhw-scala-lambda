@@ -10,20 +10,19 @@ templates:
       functionNames: [jhw-scala-lambda-]
       fileName:  jhw-scala-lambda.zip
       prefixStack: false
-
-  deployments:
-    jhw-scala-lambda-upload:
-      template: jhw-scala-lambda
-      actions: [uploadLambda]
-    jhw-scala-lambda-cfn:
-      type: cloud-formation
-      app: jhw-scala-lambda
-      parameters:
-        prependStackToCloudFormationStackName: false
-        cloudFormationStackName: jhw-scala-lambda
-        templatePath: cfn.yaml
-      dependencies: [jhw-scala-lambda]
-    jhw-scala-lambda-lambda-update:
-      template: jhw-scala-lambda
-      actions: [updateLambda]
-      dependencies: [jhw-scala-lambda-cfn]
+deployments:
+  jhw-scala-lambda-upload:
+    template: jhw-scala-lambda
+    actions: [uploadLambda]
+  jhw-scala-lambda-cfn:
+    type: cloud-formation
+    app: jhw-scala-lambda
+    parameters:
+      prependStackToCloudFormationStackName: false
+      cloudFormationStackName: jhw-scala-lambda
+      templatePath: cfn.yaml
+    dependencies: [jhw-scala-lambda-upload]
+  jhw-scala-lambda-lambda-update:
+    template: jhw-scala-lambda
+    actions: [updateLambda]
+    dependencies: [jhw-scala-lambda-cfn]
